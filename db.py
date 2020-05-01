@@ -32,9 +32,9 @@ class Database:
         data = self.cursor.execute(sql)
         return data.fetchall()
 
-    def list(self, table, conds={}):
+    def list(self, conds={}):
         sql = f"""
-            select * from {table} where {self._handle_conds(conds)}
+            select * from {self.table_name} {self._handle_conds(conds)}
         """
         data = self.cursor.execute(sql)
         return data.fetchall()
@@ -85,6 +85,10 @@ class User(Database):
         return super().read(query, id)
 
 
+class Address(Database):
+    def __init__(self):
+      super().__init__()
+      self.table_name = "address"
 
 if __name__ == "__main__":
     db = User()
